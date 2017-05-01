@@ -1,3 +1,5 @@
-<h1>
-  {{title}}
-</h1>
+<ul>
+  <li *ngFor="let case of cases|async">
+      {{case.caseName}}
+  </li>
+</ul>

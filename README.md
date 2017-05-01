@@ -1,10 +1,172 @@
 # Ngfirebase
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.1.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.1. Using angularfire2 with this.
+
+## Firebase setup
+Run `npm install firebase angularfire2 --save` to install firebase and angularfire2
 
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Next in `app.module.ts` add
+
+```
+    import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
+    
+```
+
+and 
+
+```
+export const fireConfig = {
+    apiKey: "AIzaSyDQ9XNiF58GMGJ-FDTO75jn7DJ5t0XtbI0",
+    authDomain: "bongish-food.firebaseapp.com",
+    databaseURL: "https://bongish-food.firebaseio.com",
+    projectId: "bongish-food",
+    storageBucket: "bongish-food.appspot.com",
+    messagingSenderId: "12665371470"
+};
+
+const myFirebaseAuthConfig = {
+  provider: AuthProviders.Password,
+  method: AuthMethods.Password
+};
+
+AngularFireModule.initializeApp(fireConfig, myFirebaseAuthConfig),
+
+```
+We will need two providers `LoginService, AuthGuard`
+
+The code for `LoginService`
+
+```
+import { Injectable } from '@angular/core';
+import { AngularFire, AuthProviders } from 'angularfire2';
+import { User } from './user.model';
+
+@Injectable()
+export class LoginService {
+
+    constructor(public af: AngularFire) {
+    }
+
+    login(user: User) {
+        return this.af.auth.login({ email: user.email, password: user.password });
+    }
+
+    logout() {
+        return this.af.auth.logout();
+    }
+
+}
+```
+
+and code for `AuthGuard`
+
+```
+import { Injectable } from '@angular/core';
+import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { LoginService } from './login.service';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/take';
+
+@Injectable()
+export class AuthGuard implements CanActivate {
+
+  constructor(private _loginServ: LoginService, 
+                private router: Router) {}
+
+canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    return this._loginServ.af.auth.map((auth) => {
+        if (!auth) {
+          this.router.navigateByUrl('/');
+          return false;
+        }
+        return true;
+    }).take(1);
+  }
+}
+```
+
+The `app.router.ts` file
+
+```
+import { Routes, RouterModule } from '@angular/router';
+import { AppComponent } from './app.component';
+import { HomeComponent } from './home/home.component';
+import { FrontpageComponent } from './frontpage/frontpage.component';
+import { CommittieesComponent } from './committiees/committiees.component';
+import { TopicsComponent } from './topics/topics.component';
+import { KeynotespeakersComponent } from './keynotespeakers/keynotespeakers.component';
+import { JournalsComponent } from './journals/journals.component';
+import { RegistrationComponent } from './registration/registration.component';
+import { RegistrationfeeComponent } from './registrationfee/registrationfee.component';
+import { ParticipantsComponent } from './participants/participants.component';
+import { AbstractsComponent } from './abstracts/abstracts.component';
+import { ImportantComponent } from './important/important.component';
+import { AccommodationComponent } from './accommodation/accommodation.component';
+import { ConferencevenueComponent } from './conferencevenue/conferencevenue.component';
+import { SponsorsComponent } from './sponsors/sponsors.component';
+import { ContactComponent } from './contact/contact.component';
+import { LoginComponent } from './login/login.component';
+import { ContainerComponent } from './admin/container/container.component';
+import { AuthGuard } from './shared/authguard.service';
+import { NotfoundComponent } from './notfound/notfound.component';
+import { RegistrationsuccessComponent } from './registrationsuccess/registrationsuccess.component';
+import { TripComponent } from './trip/trip.component';
+import { InvitedspeakersComponent } from './invitedspeakers/invitedspeakers.component';
+
+const appRoutes: Routes = [
+    {
+        path: '', component: AppComponent, children: [
+            {
+                path: '', component: HomeComponent, children: [
+                    {path: 'login', component: LoginComponent },
+                ]
+            },
+            { path: 'manageusers', component: ContainerComponent, canActivate: [AuthGuard] }
+        ]
+    },
+    { path: '**', component: NotfoundComponent }
+]
+
+export const routes = RouterModule.forRoot(appRoutes, { useHash: false });
+```
+
+CRUD file sample
+
+```
+import { Injectable } from '@angular/core';
+import { Author } from './author.model';
+import { AngularFire } from 'angularfire2';
+import { Observable } from 'rxjs/Observable';
+
+@Injectable()
+export class AuthorService{
+    
+    constructor(private af: AngularFire){}
+    
+    addAuthor(author: Author){
+        this.getAuthors().subscribe(res => {
+                author.id = res.length+1;
+            });
+        return this.af.database.list('authors').push(author);
+    }
+
+    updateAuthor(author: Author){
+        this.af.database.list('authors').update(author.$key, {firstName: author.firstName, lastName: author.lastName, institute: author.institute, city: author.city, country: author.country, email: author.email, abstractContent: author.abstractContent, approved: author.approved, keywords: author.keywords, titleOfStudy: author.titleOfStudy, otherAuthors: author.otherAuthors || null});
+    }
+
+    getAuthors(): Observable<Author[]>{
+        return this.af.database.list('authors');
+    }
+
+    getAuthor(author: Author){
+        
+    }
+
+}
+```
 
 ## Code scaffolding
 
