@@ -167,7 +167,104 @@ export class AuthorService{
 
 }
 ```
+Some code for ready use
 
+```
+    getCasesOfUser(): Case[]{
+        let cases:Case[]=[];
+        if(this.uid !=undefined || this.uid !=null){
+            this.af.database.list('usercases/'+this.uid)
+                .forEach(res => res.forEach(
+                    res => 
+                    {
+                        console.log(res.$key);
+                        this.af.database.object(`cases/`+ res.$key).subscribe(res=> {
+                            console.log(res);
+                            cases.push(res);
+                        })
+                    }    
+                ));
+        }
+        return cases;
+    }
+
+    getUserCases(): Observable<Case[]>{
+        if(this.uid !=undefined || this.uid !=null){
+           return  this.af.database.list('usercases/'+this.uid)
+            .map(res => res.map(res => res.$key))
+            .map(lspc => lspc.map(lessonKey => this.af.database.object('cases/' + lessonKey)) )
+            .mergeMap(fbojs => Observable.combineLatest(fbojs) )
+        }
+    }
+```
+Rules file
+```
+{
+  "rules": {
+    "cases":{
+    	".read": "auth != null || auth == null",
+      ".write": "auth != null"
+    },
+    "usercases":{
+    	".read": "auth != null || auth == null",
+    	"$uid": {
+        ".write": "auth != null && auth.uid == $uid"
+      }
+    },
+    "userClients": {
+      "$uid": {
+        ".read": "auth.uid == $uid",
+        ".write": "auth.uid == $uid"
+      }
+    }  
+  }
+}
+```
+Some more code
+
+```
+import { Injectable } from '@angular/core';
+import { AngularFire } from 'angularfire2';
+import { Client } from './client.model';
+import { Observable } from 'rxjs/Observable';
+import { LoginService } from '../login.service';
+
+@Injectable()
+export class ClientService {
+    
+    private uid: string;
+
+    constructor(private af: AngularFire, private _loginServ: LoginService) {
+        this.af.auth.subscribe(auth => {
+            if(auth!=undefined && auth !=null)
+                this.uid = auth.uid;
+            }
+            );
+     }
+    
+    addClient(cas: Client){
+        this.af.database.list('userClients/'+this.uid).push(cas);
+    }
+
+    updateClient(cas: Client){
+        this.af.database.list('userClients/'+this.uid).update(cas.$key, {clId: cas.clId, name: cas.name});
+    }
+
+    getClients(): Observable<Client[]>{
+        if(this.uid != undefined || this.uid!=null){
+            return this.af.database.list('userClients/'+this.uid);
+        }
+        else{
+            return null;
+        }
+    }
+
+    deleteClient(cas: Client){
+        this.af.database.list('clients').remove(cas.$key);
+    }
+
+}
+```
 ## Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|module`.

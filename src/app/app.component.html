@@ -1,5 +1,38 @@
 <ul>
   <li *ngFor="let case of cases|async">
       {{case.caseName}}
+      <button (click)="updateCase(case.$key)">Update</button>
   </li>
 </ul>
+
+<ul>
+  <li *ngFor="let client of clients|async">
+      {{client.name}}
+      <button (click)="updateClient(client.$key)">Update</button>
+  </li>
+</ul>
+
+<ul>
+  <li *ngFor="let case of casesUser">
+      {{case.caseName}}
+      <button (click)="updateCase(case.$key)">Update</button>
+  </li>
+</ul>
+
+<ul>
+  <li *ngFor="let case of userCases| async">
+      {{case.caseName}}
+      <button (click)="updateCase(case.$key)">Update</button>
+  </li>
+</ul>
+
+
+<button (click)="addCase()">AddCase</button>
+<button (click)="addClient()">AddClient</button>
+<button (click)="getCasesOfUser()">GetCasesOfUser</button>
+<button (click)="getUserCases()">GetUserCases</button>
+<button (click)="getClients()">GetClients</button>
+<button (click)="loginA()">Login Asif</button>
+<button (click)="logoutA()">Logout Asif</button>
+<button (click)="loginS()">Login Saif</button>
+<button (click)="logoutS()">Logout Saif</button>

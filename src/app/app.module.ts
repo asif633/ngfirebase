@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { LoginService } from './shared/login.service';
 import { AuthGuard } from './shared/authguard.service';
 import { CaseService } from './shared/models/case.service';
+import { ClientService } from './shared/models/client.service';
 
 export const fireConfig = {
     apiKey: "AIzaSyDQ9XNiF58GMGJ-FDTO75jn7DJ5t0XtbI0",
@@ -33,7 +34,7 @@ const myFirebaseAuthConfig = {
     HttpModule,
     AngularFireModule.initializeApp(fireConfig, myFirebaseAuthConfig),
   ],
-  providers: [LoginService, AuthGuard,CaseService],
+  providers: [LoginService, AuthGuard,CaseService,ClientService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
