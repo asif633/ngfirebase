@@ -10,10 +10,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
-  
+
   user: Observable<firebase.User>;
-  
-  constructor(private af: AngularFireAuth, private router: Router) { 
+
+  constructor(private af: AngularFireAuth, private router: Router) {
     this.user = af.authState;
   }
 
@@ -24,15 +24,22 @@ export class SignupComponent implements OnInit {
   password: string;
   msg: string;
 
-  signup(){
+  signup() {
     this.af.auth.createUserWithEmailAndPassword(this.email, this.password).then(
       res => {
-        this.user.subscribe( user => user.sendEmailVerification() );
-        this.af.auth.signOut();
-        this.router.navigate(['signedup']);
+        this.user.subscribe(user => {
+          if (user != undefined && user != null) {
+            user.sendEmailVerification().then(
+              resolve => {
+                this.af.auth.signOut();
+                this.router.navigate(['signedup']);
+              }
+            );
+          }
+        });
       }
     )
-    .catch(error => this.msg = error.message);
+      .catch(error => this.msg = error.message);
   }
 
 }

@@ -7,7 +7,6 @@ import { SignupComponent } from './loginemail/signup/signup.component';
 import { CaseContainerComponent } from './case-container/case-container.component';
 import { AuthGuard } from './shared/authguard.service';
 import { ClientContainerComponent } from './client-container/client-container.component';
-import { VerifyemailComponent } from './loginemail/verifyemail.component';
 import { SignedupComponent } from './loginemail/signedup.component';
 
 const appRoutes: Routes = [
@@ -15,7 +14,6 @@ const appRoutes: Routes = [
         {path: '', component: NavbarComponent, children: [
             {path: 'signin', component: SigninComponent},
             {path: 'signup', component: SignupComponent},
-            {path: 'emailverify', component: VerifyemailComponent},
             {path: 'signedup', component: SignedupComponent},
             {path: 'case', component: CaseContainerComponent, canActivate: [AuthGuard]},
             {path: 'client', component: ClientContainerComponent, canActivate: [AuthGuard]}

@@ -19,7 +19,6 @@ import { routes } from './app.routes';
 import * as firebase from 'firebase/app';
 import { CaseContainerComponent } from './case-container/case-container.component';
 import { ClientContainerComponent } from './client-container/client-container.component';
-import { VerifyemailComponent } from './loginemail/verifyemail.component';
 import { SignedupComponent } from './loginemail/signedup.component';
 
 export const fireConfig = {
@@ -45,8 +44,7 @@ const myFirebaseAuthConfig = {
     LoginemailComponent,
     CaseContainerComponent,
     ClientContainerComponent,
-    VerifyemailComponent,
-    SignedupComponent
+    SignedupComponent,
   ],
   imports: [
     BrowserModule,

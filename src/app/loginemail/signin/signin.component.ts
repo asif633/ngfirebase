@@ -12,7 +12,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 })
 export class SigninComponent implements OnInit {
 
-  constructor(private logServ: LoginService, private router: Router, private afAuth: AngularFireAuth) { 
+  constructor(private logServ: LoginService, private router: Router, private afAuth: AngularFireAuth) {
     this.user = afAuth.authState;
   }
 
@@ -29,11 +29,17 @@ export class SigninComponent implements OnInit {
   signin() {
     this.logServ.login({ email: this.email, password: this.password })
       .then(resolve => this.user.subscribe(user => {
-        if(!user.emailVerified){
-          this.router.navigate(['emailverify'])    
+        if (user != undefined && user != null) {
+          if (!user.emailVerified) {
+            //this.router.navigate(['emailverify']);
+            this.afAuth.auth.signOut();
+            this.msg = "Verify your email address before signing in.";
+          }
+          else {
+            this.router.navigate(['case'])
+          }
         }
       }))
-      .then(resolve => this.router.navigate(['case']))
       .catch(error => this.msg = error.message);
   }
 
