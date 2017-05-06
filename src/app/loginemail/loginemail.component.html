@@ -1,0 +1,12 @@
+<div class="container">
+  <div class="row">
+    <div class="md-col-4" *ngIf="(user | async)?.uid && (user | async)?.emailVerified">
+      <h5>{{(user | async)?.displayName}} logged in using email: {{(user | async)?.email}} and uid: {{(user | async)?.uid}}</h5>
+      {{(user | async)?.emailVerified}}
+      <button class="btn btn-warning" (click)="signout()">Sign Out</button>
+    </div>
+    <div class="md-col-4" *ngIf="(user | async)?.uid && !(user | async)?.emailVerified">
+      Please verify your email address first. Then Sign In.
+    </div>
+  </div>
+</div>

@@ -1,0 +1,37 @@
+<div class="navbar navbar-toggleable-md fixed-top navbar-inverse bg-primary">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
+    aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  <div class="container">
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <a routerLink="/" class="navbar-brand">NgFirebase</a>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a routerLink="/signin" class="nav-link" *ngIf="!(user|async)?.uid">Sign In</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/signup" class="nav-link" *ngIf="!(user|async)?.uid">Sign Up</a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav mr-auto" *ngIf="(user|async)?.uid">
+        <li class="nav-item">
+          <a class="nav-link" href="http://builtwithbootstrap.com/" target="_blank">{{(user|async)?.email}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" (click)="signout()">Sign Out</a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav ml-auto" *ngIf="(user|async)?.uid">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/case">Protected Case</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/client">Protected Client</a>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>

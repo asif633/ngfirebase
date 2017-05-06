@@ -1,7 +1,7 @@
-<ul>
+<!--<ul>
   <li *ngFor="let case of cases|async">
       {{case.caseName}}
-      <button (click)="updateCase(case.$key)">Update</button>
+      <button class="btn btn-primary" (click)="updateCase(case.$key)">Update</button>
   </li>
 </ul>
 
@@ -35,4 +35,6 @@
 <button (click)="loginA()">Login Asif</button>
 <button (click)="logoutA()">Logout Asif</button>
 <button (click)="loginS()">Login Saif</button>
-<button (click)="logoutS()">Logout Saif</button>
+<button (click)="logoutS()">Logout Saif</button>-->
+
+<router-outlet></router-outlet>
