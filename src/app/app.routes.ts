@@ -18,7 +18,7 @@ const appRoutes: Routes = [
             {path: 'signedup', component: SignedupComponent},
             {path: 'lawyercase', component: LawyercaseContainerComponent, canActivate: [AuthGuard]},
             {path: 'case', component: CaseContainerComponent, canActivate: [AuthGuard]},
-            {path: 'client', component: ClientContainerComponent, canActivate: [AuthGuard]}
+            // {path: 'client', component: ClientContainerComponent, canActivate: [AuthGuard]}
         ]}
     ]}
 ];
