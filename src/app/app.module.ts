@@ -27,6 +27,8 @@ import { LawyercaseDatatableComponent } from './lawyercase-datatable/lawyercase-
 import { LawyercasedateDatatableComponent } from './lawyercasedate-datatable/lawyercasedate-datatable.component';
 import { LawyercasedateComponent } from './lawyercasedate/lawyercasedate.component';
 import { CaseDateService } from './shared/models/casedate.service';
+import { CaseDatatableComponent } from './case-datatable/case-datatable.component';
+import { CaseFormComponent } from './case-form/case-form.component';
 
 export const fireConfig = {
     apiKey: "AIzaSyDQ9XNiF58GMGJ-FDTO75jn7DJ5t0XtbI0",
@@ -57,6 +59,8 @@ const myFirebaseAuthConfig = {
     LawyercaseDatatableComponent,
     LawyercasedateDatatableComponent,
     LawyercasedateComponent,
+    CaseDatatableComponent,
+    CaseFormComponent,
   ],
   imports: [
     BrowserModule,
