@@ -20,6 +20,15 @@ import * as firebase from 'firebase/app';
 import { CaseContainerComponent } from './case-container/case-container.component';
 import { ClientContainerComponent } from './client-container/client-container.component';
 import { SignedupComponent } from './loginemail/signedup.component';
+import { LawyercaseComponent } from './lawyercase/lawyercase.component';
+import { LawyercaseContainerComponent } from './lawyercase-container/lawyercase-container.component';
+import { LawyerCaseService } from './shared/models/lawyercase.service';
+import { LawyercaseDatatableComponent } from './lawyercase-datatable/lawyercase-datatable.component';
+import { LawyercasedateDatatableComponent } from './lawyercasedate-datatable/lawyercasedate-datatable.component';
+import { LawyercasedateComponent } from './lawyercasedate/lawyercasedate.component';
+import { CaseDateService } from './shared/models/casedate.service';
+import { CaseDatatableComponent } from './case-datatable/case-datatable.component';
+import { CaseFormComponent } from './case-form/case-form.component';
 
 export const fireConfig = {
     apiKey: "AIzaSyDQ9XNiF58GMGJ-FDTO75jn7DJ5t0XtbI0",
@@ -45,6 +54,13 @@ const myFirebaseAuthConfig = {
     CaseContainerComponent,
     ClientContainerComponent,
     SignedupComponent,
+    LawyercaseComponent,
+    LawyercaseContainerComponent,
+    LawyercaseDatatableComponent,
+    LawyercasedateDatatableComponent,
+    LawyercasedateComponent,
+    CaseDatatableComponent,
+    CaseFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,7 +71,7 @@ const myFirebaseAuthConfig = {
     AngularFireDatabaseModule,
     routes,
   ],
-  providers: [LoginService, AuthGuard,CaseService,ClientService],
+  providers: [LoginService, AuthGuard,CaseService,ClientService, LawyerCaseService, CaseDateService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

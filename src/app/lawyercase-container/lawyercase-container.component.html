@@ -1,0 +1,56 @@
+<div class="container">
+  <div class="row mb-5 mt-3">
+    <div class="col-md-8 col-lg-6">
+      <p>This example is the case where only logged in user can read and write their own data.</p>
+      <pre>
+      users--
+            userkey1--
+                    cases--
+                          casekey1--
+                                  data
+                          casekey2--
+                                  data
+            userkey1--
+                    cases--
+                          casekey1--
+                                  data
+                          casekey2--
+                                  data
+                    caseRelated--
+                              casekey1--
+                                    casedates--
+                                            casedatekey1--
+                                                        data
+                                            casedatekey2--
+                                                        data
+    </pre>
+    </div>
+    <div class="col-md-4 col-lg-6">
+      <p>Rules</p>
+      <pre>
+      <![CDATA[
+    "users":{
+      "$uid": {
+        ".read": "auth.uid == $uid",
+        ".write": "auth.uid == $uid"
+      }
+    }
+    ]]>
+    </pre>
+    </div>
+  </div>
+  <div class="row mb-5 mt-3">
+    <div class="col-md-8 col-lg-6">
+      <app-lawyercase-datatable (selectLawyerCase)="getSelectedLawyerCase($event)" (add)="addOrUpdate($event)"></app-lawyercase-datatable>
+    </div>
+    <div class="col-md-4 col-lg-6">
+      <app-lawyercase [lawyerCase]="selectedLawyerCase" [addCase]="addBool"></app-lawyercase>
+    </div>
+    <div class="col-md-8 col-lg-6">
+      <app-lawyercasedate-datatable [lawyerCase]="selectedLawyerCase" (selectCaseDate)="getSelectedCaseDate($event)" (add)="addOrUpdateDate($event)"></app-lawyercasedate-datatable>
+    </div>
+    <div class="col-md-4 col-lg-6">
+      <app-lawyercasedate [lawyerCase]="selectedLawyerCase" [caseDate]="selectedCaseDate" [newCaseDate]="addCaseBool"></app-lawyercasedate>
+    </div>
+  </div>
+</div>

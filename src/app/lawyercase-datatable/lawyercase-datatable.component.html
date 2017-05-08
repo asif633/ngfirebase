@@ -1,0 +1,19 @@
+<table class="table table-striped table-hover table-bordered">
+  <thead class="thead-inverse">
+    <tr>
+      <th>Case Number</th>
+      <th>Case Name</th>
+      <th>Select</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let case of lawyercases | async">
+      <td>{{case.no}}</td>
+      <td>{{case.name}}</td>
+      <td>
+        <input type="radio" name="optionsRadios" id="optionsRadios1" value="product" (click)="selectedLawyerCase(case)">
+      </td>
+    </tr>
+  </tbody>
+</table>
+<button class="btn btn-primary" (click)="initializeNew()">Add New Case</button>

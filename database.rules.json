@@ -1,0 +1,38 @@
+{
+  "rules": {
+    "cases":{
+      ".read": true,
+    	"$caseid":{
+    		".read": true,
+      	".write": "root.child('usercases/'+auth.uid+'/'+$caseid).exists() && auth != null"
+      }
+    },
+    "usercases":{
+    	"$uid": {
+        ".read": "auth != null || auth.uid == $uid",
+        ".write": "auth != null && auth.uid == $uid"
+      }
+    },
+    "users":{
+      "$uid": {
+        ".read": "auth.uid == $uid",
+        ".write": "auth.uid == $uid"
+      }
+    },
+    "admins": {
+      "$uid": {
+        ".read": "auth.uid == $uid",
+        // First add an admin manually and then change like below to lock it
+        ".write": "data.parent().child(auth.uid).exists()"  
+      }
+    },
+    "userRoles":{
+      ".read": "root.child('admins').child(auth.uid).exists()",
+      "$uid": {
+        ".read": "auth.uid == $uid || root.child('admins').child(auth.uid).exists()",
+        //".write": "root.child('usersData').child(auth.uid).child('isAdmin').val() == true"
+        ".write": "root.child('admins').child(auth.uid).exists()"  
+      }
+    }
+  }
+}

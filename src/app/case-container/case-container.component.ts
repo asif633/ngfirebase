@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Case } from '../shared/models/case.model';
 
 @Component({
   selector: 'app-case-container',
@@ -10,6 +11,17 @@ export class CaseContainerComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  selectedCase: Case;
+  addBool: boolean;
+
+  getSelectedCase(event) {
+    this.selectedCase = event;
+  }
+
+  addOrUpdate(event) {
+    this.addBool = event;
   }
 
 }

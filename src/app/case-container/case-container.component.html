@@ -1,3 +1,47 @@
-<p>
-  case-container works!
-</p>
+<div class="container">
+  <div class="row mb-5 mt-3">
+    <div class="col-md-8 col-lg-6">
+      <p>This example is the case where any one can read the data and only logged in user can and write their own data.</p>
+      <pre>
+          cases--
+              casekey1--
+                      data
+              casekey2--
+                      data
+          usercases--
+                  uid1--
+                      casekey1: true
+                  uid2--
+                      casekey2: true    
+      </pre>
+    </div>
+    <div class="col-md-4 col-lg-6">
+      <p>Rules</p>
+      <pre>
+      <![CDATA[
+            "cases":{
+                ".read": true,
+                "$caseid":{
+                  ".read": true,
+                  ".write": "root.child('usercases/'+auth.uid+'/'+$caseid).exists() && auth != null"
+                }
+              },
+              "usercases":{
+                "$uid": {
+                  ".read": "auth != null || auth.uid == $uid",
+                  ".write": "auth != null && auth.uid == $uid"
+                }
+              }
+      ]]>
+    </pre>
+    </div>
+  </div>
+  <div class="row mb-5 mt-3">
+    <div class="col-md-8 col-lg-6">
+      <app-case-datatable (selectCase)="getSelectedCase($event)" (add)="addOrUpdate($event)"></app-case-datatable>
+    </div>
+    <div class="col-md-4 col-lg-6">
+      <app-case-form [lawyerCase]="selectedCase" [addCase]="addBool"></app-case-form>
+    </div>
+  </div>
+</div>

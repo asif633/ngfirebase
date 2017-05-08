@@ -1,0 +1,22 @@
+<form *ngIf="lawyerCase">
+  <fieldset>
+    <legend>LawyerCase Details</legend>
+    <div class="form-group">
+      <label for="name">Case Number</label>
+      <input type="text" class="form-control" id="no" placeholder="Enter Case Number" [(ngModel)]="lawyerCase.caseNo" name="no">
+    </div>
+    <div class="form-group">
+      <label for="id">Case Name</label>
+      <input type="text" class="form-control" id="name" placeholder="Enter Case Name" [(ngModel)]="lawyerCase.caseName" name="name">
+    </div>
+    <div *ngIf="addCase==false">
+      <button type="submit" class="btn btn-primary" (click)="updateCase()">Update</button>
+      <button type="submit" class="btn btn-danger" (click)="deleteCase()">Delete</button>
+    </div>
+    <div *ngIf="addCase==true">
+      <button type="submit" class="btn btn-primary" (click)="addNew()">Add</button>
+    </div>
+  </fieldset>
+</form>
+<p *ngIf="msg" class="text-success">{{msg}}</p>
+<p *ngIf="msg1" class="text-danger">{{msg1}}</p>

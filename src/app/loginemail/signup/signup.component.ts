@@ -32,6 +32,7 @@ export class SignupComponent implements OnInit {
             user.sendEmailVerification().then(
               resolve => {
                 this.af.auth.signOut();
+                location.reload();
                 this.router.navigate(['signedup']);
               }
             );
@@ -40,6 +41,12 @@ export class SignupComponent implements OnInit {
       }
     )
       .catch(error => this.msg = error.message);
+  }
+
+  ngOnDestroy() {
+    if (this.user != null) {
+      this.user.subscribe().unsubscribe();
+    }
   }
 
 }
