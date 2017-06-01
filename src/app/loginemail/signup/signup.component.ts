@@ -32,7 +32,7 @@ export class SignupComponent implements OnInit {
             user.sendEmailVerification().then(
               resolve => {
                 this.af.auth.signOut();
-                location.reload();
+                //location.reload();
                 this.router.navigate(['signedup']);
               }
             );

@@ -14,12 +14,12 @@ const appRoutes: Routes = [
     {path: '', component: AppComponent, children: [
         {path: '', component: NavbarComponent, children: [
             {path: 'signin', component: SigninComponent},
-            {path: 'signup', component: SignupComponent},
             {path: 'signedup', component: SignedupComponent},
             {path: 'lawyercase', component: LawyercaseContainerComponent, canActivate: [AuthGuard]},
             {path: 'case', component: CaseContainerComponent, canActivate: [AuthGuard]},
             // {path: 'client', component: ClientContainerComponent, canActivate: [AuthGuard]}
-        ]}
+        ]},
+        {path: 'signup', component: SignupComponent},
     ]}
 ];
 
